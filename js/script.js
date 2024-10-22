@@ -1,17 +1,3 @@
-// Fungsi untuk menampilkan input 'alasan lainnya' jika dipilih
-function toggleLainnya() {
-    const alasanSelect = document.getElementById('alasan');
-    const lainnyaGroup = document.getElementById('lainnya-group');
-
-    if (alasanSelect.value === 'Lainnya') {
-        // Tampilkan input untuk alasan lainnya
-        lainnyaGroup.style.display = 'block';
-    } else {
-        // Sembunyikan input jika alasan lainnya tidak dipilih
-        lainnyaGroup.style.display = 'none';
-    }
-}
-
 function generatePDF() {
     // Ambil data dari form
     const nama = document.getElementById('nama').value;
@@ -19,6 +5,7 @@ function generatePDF() {
     const sekolah = document.getElementById('sekolah').value;
     const tanggal = document.getElementById('tanggal').value;
     let alasan = document.getElementById('alasan').value;
+    const namaOrtu = document.getElementById('namaOrtu').value;
 
     // Jika memilih alasan lainnya, ambil nilai dari input tambahan
     if (alasan === 'Lainnya') {
@@ -30,7 +17,7 @@ function generatePDF() {
         alasan = alasanLainnya;
     }
 
-    if (!nama || !kelas || !sekolah || !tanggal || !alasan) {
+    if (!nama || !kelas || !sekolah || !tanggal || !alasan || !namaOrtu) {
         alert("Harap isi semua kolom form!");
         return;
     }
@@ -46,21 +33,25 @@ function generatePDF() {
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
-    doc.text(`Yang Terhormat,`, 20, 40);
-    doc.text(`Bapak/Ibu Guru Wali Kelas ${kelas},`, 20, 50);
-    doc.text(`Sekolah ${sekolah}`, 20, 60);
+    const marginLeft = 20; // Margin kiri
+    const marginRight = 190; // Batas margin kanan
 
-    doc.text(`Dengan ini, kami orang tua dari:`, 20, 80);
-    doc.text(`Nama: ${nama}`, 20, 90);
-    doc.text(`Kelas: ${kelas}`, 20, 100);
-    doc.text(`Memberitahukan bahwa anak kami tidak dapat mengikuti kegiatan`, 20, 120);
-    doc.text(`belajar mengajar pada tanggal ${tanggal}, dikarenakan ${alasan}.`, 20, 130);
+    // Menambahkan isi surat dengan perataan rata kanan-kiri
+    doc.text(`Yang Terhormat,`, marginLeft, 40);
+    doc.text(`Bapak/Ibu Guru Wali Kelas ${kelas},`, marginLeft, 50);
+    doc.text(`Sekolah ${sekolah}`, marginLeft, 60);
+    doc.text(`Dengan ini, kami beritahukan bahwa anak saya yang ber:`, marginLeft, 80);
+    doc.text(`Nama: ${nama}`, marginLeft, 90);
+    doc.text(`Kelas: ${kelas}`, marginLeft, 100);
+    doc.text(`Memberitahukan bahwa anak kami tidak dapat mengikuti kegiatan`, marginLeft, 120);
+    doc.text(`belajar mengajar pada tanggal ${tanggal}, dikarenakan ${alasan}.`, marginLeft, 130);
+    doc.text(`Demikian surat izin ini kami buat, atas perhatian Bapak/Ibu kami ucapkan terima kasih.`, marginLeft, 140);
 
-    doc.text(`Demikian surat izin ini kami buat, atas perhatian Bapak/Ibu`, 20, 150);
-    doc.text(`kami ucapkan terima kasih.`, 20, 160);
-
-    doc.text(`Hormat kami,`, 20, 190);
-    doc.text(`Orang tua/Wali murid`, 20, 200);
+    // Menempatkan Hormat kami dan nama orang tua di sebelah kanan
+    const rightMargin = 170;  // Mengatur posisi lebih ke kanan
+    doc.text(`Hormat kami,`, rightMargin, 190, null, null, "right");
+    doc.text(`Orang tua/Wali murid`, rightMargin, 200, null, null, "right");
+    doc.text(`${namaOrtu}`, rightMargin, 220, null, null, "right");
 
     // Menyimpan file PDF
     doc.save(`Surat_Izin_${nama}.pdf`);
