@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Surat Izin Sekolah</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sistem Surat Izin Sekolah</h1>
+        <form id="izinForm">
+            <div class="form-group">
+                <label for="nama">Nama Siswa:</label>
+                <input type="text" id="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="kelas">Kelas:</label>
+                <input type="text" id="kelas" required>
+            </div>
+            <div class="form-group">
+                <label for="sekolah">Nama Sekolah:</label>
+                <input type="text" id="sekolah" required>
+            </div>
+            <div class="form-group">
+                <label for="tanggal">Tanggal Izin:</label>
+                <input type="date" id="tanggal" required>
+            </div>
+            <div class="form-group">
+                <label for="alasan">Alasan Izin:</label>
+                <select id="alasan" required onchange="toggleLainnya()">
+                    <option value="Izin">Izin</option>
+                    <option value="Sakit">Sakit</option>
+                    <option value="Acara Keluarga">Acara Keluarga</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+            </div>
+            <!-- Input tambahan untuk alasan lainnya -->
+            <div class="form-group" id="lainnya-group" style="display: none;">
+                <label for="alasanLainnya">Alasan Lainnya:</label>
+                <input type="text" id="alasanLainnya">
+            </div>
+            <button type="button" onclick="generatePDF()">Buat Surat Izin</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 IT Thelho Team . All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
